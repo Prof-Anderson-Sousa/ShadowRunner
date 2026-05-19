@@ -62,8 +62,10 @@
   <ItemGroup>
     <Compile Include="Assets\MorcegoSpawner.cs" />
     <Compile Include="Assets\MorcegoController.cs" />
+    <Compile Include="Assets\Scripts\Audio\BackgroundMusicManager.cs" />
     <Compile Include="Assets\Movimento.cs" />
     <Compile Include="Assets\MenuController.cs" />
+    <Compile Include="Assets\ShadowRunnerMenuSetup.cs" />
     <Compile Include="Assets\GameManager.cs" />
     <Compile Include="Assets\CameraSeguirJogador.cs" />
   </ItemGroup>

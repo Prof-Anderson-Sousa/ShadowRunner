@@ -3,6 +3,14 @@
   "WorkspaceRootPath": "C:\\Users\\adssoares\\UFRPE\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\adssoares\\UFRPE\\Assets\\Scripts\\Audio\\BackgroundMusicManager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Assets\\Scripts\\Audio\\BackgroundMusicManager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\adssoares\\UFRPE\\Assets\\MorcegoSpawner.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Assets\\MorcegoSpawner.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\adssoares\\UFRPE\\Assets\\MorcegoController.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Assets\\MorcegoController.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -23,19 +31,44 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "MorcegoController.cs",
-              "DocumentMoniker": "C:\\Users\\adssoares\\UFRPE\\Assets\\MorcegoController.cs",
-              "RelativeDocumentMoniker": "Assets\\MorcegoController.cs",
-              "ToolTip": "C:\\Users\\adssoares\\UFRPE\\Assets\\MorcegoController.cs",
-              "RelativeToolTip": "Assets\\MorcegoController.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABoAAAAAAAAAAAAAAA==",
+              "Title": "BackgroundMusicManager.cs",
+              "DocumentMoniker": "C:\\Users\\adssoares\\UFRPE\\Assets\\Scripts\\Audio\\BackgroundMusicManager.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\Audio\\BackgroundMusicManager.cs",
+              "ToolTip": "C:\\Users\\adssoares\\UFRPE\\Assets\\Scripts\\Audio\\BackgroundMusicManager.cs",
+              "RelativeToolTip": "Assets\\Scripts\\Audio\\BackgroundMusicManager.cs",
+              "ViewState": "AgIAACEAAAAAAAAAAAAAAC0AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-14T10:50:04.919Z",
+              "WhenOpened": "2026-05-19T00:05:36.286Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 1,
+              "Title": "MorcegoSpawner.cs",
+              "DocumentMoniker": "C:\\Users\\adssoares\\UFRPE\\Assets\\MorcegoSpawner.cs",
+              "RelativeDocumentMoniker": "Assets\\MorcegoSpawner.cs",
+              "ToolTip": "C:\\Users\\adssoares\\UFRPE\\Assets\\MorcegoSpawner.cs",
+              "RelativeToolTip": "Assets\\MorcegoSpawner.cs",
+              "ViewState": "AgIAABsAAAAAAAAAAAAuwCUAAAAcAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-16T23:01:50.321Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "MorcegoController.cs",
+              "DocumentMoniker": "C:\\Users\\adssoares\\UFRPE\\Assets\\MorcegoController.cs",
+              "RelativeDocumentMoniker": "Assets\\MorcegoController.cs",
+              "ToolTip": "C:\\Users\\adssoares\\UFRPE\\Assets\\MorcegoController.cs",
+              "RelativeToolTip": "Assets\\MorcegoController.cs",
+              "ViewState": "AgIAAA4AAAAAAAAAAAAwwBsAAAApAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-14T10:50:04.919Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
               "Title": "Movimento.cs",
               "DocumentMoniker": "C:\\Users\\adssoares\\UFRPE\\Assets\\Movimento.cs",
               "RelativeDocumentMoniker": "Assets\\Movimento.cs",
@@ -43,8 +76,7 @@
               "RelativeToolTip": "Assets\\Movimento.cs",
               "ViewState": "AgIAAAQAAAAAAAAAAAAwwAQAAAAiAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-14T10:49:37.286Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-04-14T10:49:37.286Z"
             }
           ]
         }
