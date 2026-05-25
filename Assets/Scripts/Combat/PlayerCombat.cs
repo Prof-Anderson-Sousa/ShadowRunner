@@ -11,6 +11,7 @@ public class PlayerCombat : MonoBehaviour
     [SerializeField] private int attackDamage = 1;
     [SerializeField] private float attackCooldown = 0.4f;
     [SerializeField] private KeyCode attackKey = KeyCode.J;
+    [SerializeField] private bool usarAtaqueMelee = false;
 
     [Header("Dash")]
     [SerializeField] private float dashSpeed = 14f;
@@ -41,7 +42,6 @@ public class PlayerCombat : MonoBehaviour
     private float invulnerableUntil;
     private float dashEndTime;
     private Coroutine invulnerabilityRoutine;
-    private Coroutine deathRoutine;
 
     private int attackTriggerHash;
     private int hurtTriggerHash;
@@ -58,6 +58,7 @@ public class PlayerCombat : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
+        CacheAttackPoint();
         CacheVisualRenderer();
         CacheAnimatorHashes();
         currentHealth = maxHealth;
@@ -108,6 +109,17 @@ public class PlayerCombat : MonoBehaviour
         deathTriggerHash = Animator.StringToHash(deathTriggerName);
     }
 
+    private void CacheAttackPoint()
+    {
+        if (attackPoint != null)
+            return;
+
+        Transform pontoEncontrado = transform.Find("AttackPoint");
+
+        if (pontoEncontrado != null)
+            attackPoint = pontoEncontrado;
+    }
+
     private void UpdateFacingDirection()
     {
         float horizontal = Input.GetAxisRaw("Horizontal");
@@ -122,6 +134,9 @@ public class PlayerCombat : MonoBehaviour
 
     private void TryMeleeAttack()
     {
+        if (!usarAtaqueMelee)
+            return;
+
         if (Time.time < nextAttackTime)
             return;
 
@@ -129,7 +144,7 @@ public class PlayerCombat : MonoBehaviour
             return;
 
         nextAttackTime = Time.time + attackCooldown;
-        TriggerAnimator(attackTriggerHash);
+        TriggerAnimator(attackTriggerHash, attackTriggerName);
 
         if (attackPoint == null)
             return;
@@ -210,7 +225,7 @@ public class PlayerCombat : MonoBehaviour
         rb.linearVelocity = Vector2.zero;
         rb.simulated = false;
 
-        deathRoutine = StartCoroutine(DeathRoutine());
+        StartCoroutine(DeathRoutine());
     }
 
     private IEnumerator DeathRoutine()
@@ -252,12 +267,18 @@ public class PlayerCombat : MonoBehaviour
             visualRenderer.color = originalSpriteColor;
     }
 
-    private void TriggerAnimator(int triggerHash)
+    private void TriggerAnimator(int triggerHash, string fallbackStateName = "")
     {
-        if (animator == null || !HasAnimatorParameter(triggerHash))
+        if (animator == null)
             return;
 
-        animator.SetTrigger(triggerHash);
+        if (HasAnimatorParameter(triggerHash))
+        {
+            animator.SetTrigger(triggerHash);
+            return;
+        }
+
+        TryCrossFadeState(fallbackStateName, 0f);
     }
 
     private bool HasAnimatorParameter(int parameterHash)
@@ -269,6 +290,29 @@ public class PlayerCombat : MonoBehaviour
         {
             if (parameter.nameHash == parameterHash)
                 return true;
+        }
+
+        return false;
+    }
+
+    private bool TryCrossFadeState(string stateName, float transitionDuration)
+    {
+        if (animator == null || string.IsNullOrEmpty(stateName))
+            return false;
+
+        int stateHash = Animator.StringToHash(stateName);
+        int baseLayerStateHash = Animator.StringToHash("Base Layer." + stateName);
+
+        if (animator.HasState(0, stateHash))
+        {
+            animator.CrossFade(stateHash, transitionDuration, 0);
+            return true;
+        }
+
+        if (animator.HasState(0, baseLayerStateHash))
+        {
+            animator.CrossFade(baseLayerStateHash, transitionDuration, 0);
+            return true;
         }
 
         return false;

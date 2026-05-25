@@ -64,7 +64,7 @@ public static class ShadowRunnerMenuSetup
         }
 
         GameObject helpPanel = CreateHelpPanel(menuRect);
-        CreateButton(menuRect, "HELP", MenuButtonStart + Vector2.down * MenuButtonSpacing, () => helpPanel.SetActive(true));
+        CreateButton(menuRect, "HELP", MenuButtonStart + Vector2.down * MenuButtonSpacing, () => ShowHelpPanel(menuRect, helpPanel));
     }
 
     private static void CreateMarker(Transform parent)
@@ -172,10 +172,36 @@ public static class ShadowRunnerMenuSetup
         commands.alignment = TextAlignmentOptions.Left;
         commands.color = new Color(0.73f, 0.82f, 0.84f, 1f);
 
-        CreateButton(rect, "VOLTAR", new Vector2(0f, -112f), () => panel.SetActive(false));
+        CreateButton(rect, "VOLTAR", new Vector2(0f, -112f), () => HideHelpPanel(parent, panel));
 
         panel.SetActive(false);
         return panel;
+    }
+
+    private static void ShowHelpPanel(RectTransform menuRect, GameObject helpPanel)
+    {
+        SetMainMenuButtonsVisible(menuRect, helpPanel.transform, false);
+        helpPanel.SetActive(true);
+        helpPanel.transform.SetAsLastSibling();
+    }
+
+    private static void HideHelpPanel(RectTransform menuRect, GameObject helpPanel)
+    {
+        helpPanel.SetActive(false);
+        SetMainMenuButtonsVisible(menuRect, helpPanel.transform, true);
+    }
+
+    private static void SetMainMenuButtonsVisible(RectTransform menuRect, Transform helpPanel, bool visible)
+    {
+        Button[] buttons = menuRect.GetComponentsInChildren<Button>(true);
+
+        foreach (Button button in buttons)
+        {
+            if (button.transform.IsChildOf(helpPanel))
+                continue;
+
+            button.gameObject.SetActive(visible);
+        }
     }
 
     private static Button CreateButton(RectTransform parent, string label, Vector2 position, UnityAction action)

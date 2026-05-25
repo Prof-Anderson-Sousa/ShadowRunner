@@ -205,7 +205,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad3314a31c2661e4db8ac7ac6c49a88c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerCombat
-  attackPoint: {fileID: 0}
+  attackPoint: {fileID: 5032840572970656203}
   attackRadius: 0.6
   enemyLayer:
     serializedVersion: 2
@@ -213,6 +213,7 @@ MonoBehaviour:
   attackDamage: 1
   attackCooldown: 0.4
   attackKey: 106
+  usarAtaqueMelee: 1
   dashSpeed: 14
   dashDuration: 0.15
   dashCooldown: 1.5
@@ -243,8 +244,8 @@ MonoBehaviour:
   chaoLayer:
     serializedVersion: 2
     m_Bits: 64
-  limiteEsquerdo: -10
-  limiteDireito: 10.5
+  nomeTilemapLimiteEsquerdo: "Cen\xE1rio Tilemap"
+  margemLimiteEsquerdo: 0.2
   teclaAcaoEspecial: 101
   custoAcaoEspecial: 3
   raioAcaoEspecial: 2.4

@@ -26,9 +26,14 @@ public class GameManager : MonoBehaviour
     void Awake()
     {
         if (Instance == null)
+        {
             Instance = this;
+        }
         else
+        {
             Destroy(gameObject);
+            return;
+        }
     }
 
     void Start()
@@ -44,12 +49,26 @@ public class GameManager : MonoBehaviour
 
     void SpawnarPersonagem()
     {
-        GameObject personagemInstanciado = Instantiate(personagemPrefab, spawnPoint.position, Quaternion.identity);
+        if (personagemPrefab == null)
+        {
+            Debug.LogError("GameManager: personagemPrefab não foi atribuído no Inspector.");
+            return;
+        }
+
+        Vector3 posicaoSpawn = spawnPoint != null ? spawnPoint.position : Vector3.zero;
+
+        GameObject personagemInstanciado = Instantiate(
+            personagemPrefab,
+            posicaoSpawn,
+            Quaternion.identity
+        );
+
         JogadorAtual = personagemInstanciado.transform;
     }
 
     public void ReiniciarJogo()
     {
+        Time.timeScale = 1f;
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
@@ -76,6 +95,16 @@ public class GameManager : MonoBehaviour
             Pontuacao += 150;
             Essencia += 1;
         }
+
+        AtualizarHUD();
+    }
+
+    public void RemoverPontos(int pontosPerdidos)
+    {
+        Pontuacao -= pontosPerdidos;
+
+        if (Pontuacao < 0)
+            Pontuacao = 0;
 
         AtualizarHUD();
     }

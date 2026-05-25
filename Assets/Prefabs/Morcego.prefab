@@ -194,10 +194,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MorcegoController
   velocidade: 2
-  amplitudeOnda: 0.8
-  frequenciaOnda: 2
-  distanciaRepulsao: 1.5
-  forcaRepulsao: 2
+  distanciaDoJogador: 2.5
+  offsetBalao: {x: -1.1, y: 1.1}
+  falaTutorial: 'A cidade foi tomada por bichos!
+
+    Eu sou o primeiro, mas ha varios espalhados pela cidade.
+
+    Sua missao e matar os bichos.'
   recompensaPontos: 100
   recompensaEssencia: 1
   recompensaPontosAcaoEspecial: 60

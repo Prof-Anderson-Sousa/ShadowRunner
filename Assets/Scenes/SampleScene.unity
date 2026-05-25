@@ -564,11 +564,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MorcegoSpawner
   morcegoPrefab: {fileID: 3518303920374340222, guid: 46d8f2d55cb0d29468864e93fbe60efa, type: 3}
-  intervaloInicial: 5
-  maxMorcegosInicial: 5
-  xSpawn: 12
-  ySpawnCima: 3
-  ySpawnBaixo: 0
+  posicaoInicial: {x: 0, y: 1.5}
 --- !u!4 &381393298
 Transform:
   m_ObjectHideFlags: 0
@@ -2107,10 +2103,9 @@ MonoBehaviour:
   suavizacao: 0.18
   antecipacaoHorizontal: 1.5
   zoomOrtografico: 4.3
-  limiteEsquerdo: -8
-  limiteDireito: 8
   limiteInferior: 0.6
   limiteSuperior: 1.2
+  nomeTilemapLimiteEsquerdo: "Cen\xE1rio Tilemap"
 --- !u!1 &610109842
 GameObject:
   m_ObjectHideFlags: 0
@@ -3504,75 +3499,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1207150850}
   m_CullTransparentMesh: 1
---- !u!1001 &1448956066
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: -2253911629886400664, guid: cddcb13611274f743919a2dc02bfc5a6, type: 3}
-      propertyPath: m_Name
-      value: SHADOW Series - The Blind Huntress
-      objectReference: {fileID: 0}
-    - target: {fileID: 3626916397498700004, guid: cddcb13611274f743919a2dc02bfc5a6, type: 3}
-      propertyPath: m_SortingOrder
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 7878350319992209165, guid: cddcb13611274f743919a2dc02bfc5a6, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 3.8471
-      objectReference: {fileID: 0}
-    - target: {fileID: 7878350319992209165, guid: cddcb13611274f743919a2dc02bfc5a6, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 2.8147
-      objectReference: {fileID: 0}
-    - target: {fileID: 7878350319992209165, guid: cddcb13611274f743919a2dc02bfc5a6, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -2.62
-      objectReference: {fileID: 0}
-    - target: {fileID: 7878350319992209165, guid: cddcb13611274f743919a2dc02bfc5a6, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -3.52
-      objectReference: {fileID: 0}
-    - target: {fileID: 7878350319992209165, guid: cddcb13611274f743919a2dc02bfc5a6, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7878350319992209165, guid: cddcb13611274f743919a2dc02bfc5a6, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7878350319992209165, guid: cddcb13611274f743919a2dc02bfc5a6, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7878350319992209165, guid: cddcb13611274f743919a2dc02bfc5a6, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7878350319992209165, guid: cddcb13611274f743919a2dc02bfc5a6, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7878350319992209165, guid: cddcb13611274f743919a2dc02bfc5a6, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7878350319992209165, guid: cddcb13611274f743919a2dc02bfc5a6, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7878350319992209165, guid: cddcb13611274f743919a2dc02bfc5a6, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: -8435245712485981826, guid: cddcb13611274f743919a2dc02bfc5a6, type: 3}
 --- !u!1 &1475288515
 GameObject:
   m_ObjectHideFlags: 0
@@ -4564,87 +4490,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2036512726}
   m_CullTransparentMesh: 1
---- !u!1001 &3319900710235373023
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 1673937591486835621, guid: 5f0bd76357725074eafd00c7220d44be, type: 3}
-      propertyPath: m_SortingOrder
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 3851714296029427337, guid: 5f0bd76357725074eafd00c7220d44be, type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5032243932892900393, guid: 5f0bd76357725074eafd00c7220d44be, type: 3}
-      propertyPath: m_Name
-      value: SHADOW Series - The Shadowed Wetlands Boss
-      objectReference: {fileID: 0}
-    - target: {fileID: 5205006400668140620, guid: 5f0bd76357725074eafd00c7220d44be, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 1.7233695
-      objectReference: {fileID: 0}
-    - target: {fileID: 5205006400668140620, guid: 5f0bd76357725074eafd00c7220d44be, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 2.001688
-      objectReference: {fileID: 0}
-    - target: {fileID: 5205006400668140620, guid: 5f0bd76357725074eafd00c7220d44be, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 1.98
-      objectReference: {fileID: 0}
-    - target: {fileID: 5205006400668140620, guid: 5f0bd76357725074eafd00c7220d44be, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -2.17
-      objectReference: {fileID: 0}
-    - target: {fileID: 5205006400668140620, guid: 5f0bd76357725074eafd00c7220d44be, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5205006400668140620, guid: 5f0bd76357725074eafd00c7220d44be, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5205006400668140620, guid: 5f0bd76357725074eafd00c7220d44be, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5205006400668140620, guid: 5f0bd76357725074eafd00c7220d44be, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5205006400668140620, guid: 5f0bd76357725074eafd00c7220d44be, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5205006400668140620, guid: 5f0bd76357725074eafd00c7220d44be, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5205006400668140620, guid: 5f0bd76357725074eafd00c7220d44be, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5205006400668140620, guid: 5f0bd76357725074eafd00c7220d44be, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8088946649914939753, guid: 5f0bd76357725074eafd00c7220d44be, type: 3}
-      propertyPath: m_Size.x
-      value: 0.30581704
-      objectReference: {fileID: 0}
-    - target: {fileID: 8088946649914939753, guid: 5f0bd76357725074eafd00c7220d44be, type: 3}
-      propertyPath: m_Offset.x
-      value: -0.18790852
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 5f0bd76357725074eafd00c7220d44be, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

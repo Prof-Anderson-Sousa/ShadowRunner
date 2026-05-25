@@ -18,12 +18,13 @@ public class ShadowCreatureAI : MonoBehaviour
     [SerializeField] private float chaseSpeed = 3f;
     [SerializeField] private float patrolDistance = 3f;
 
-    [Header("Detecção e Ataque")]
+    [Header("Deteccao e Ataque")]
     [SerializeField] private float detectionRadius = 5f;
     [SerializeField] private float attackRadius = 1.2f;
     [SerializeField] private int attackDamage = 1;
     [SerializeField] private float telegraphDuration = 0.5f;
     [SerializeField] private float attackCooldown = 2f;
+    [SerializeField] private string attackAnimationTrigger = "Attack";
     [SerializeField] private string deathAnimationTrigger = "Die";
 
     private Rigidbody2D rb;
@@ -83,7 +84,6 @@ public class ShadowCreatureAI : MonoBehaviour
         }
 
         UpdateSpriteFacing();
-        UpdateAnimationStates(); 
     }
 
     private void FixedUpdate()
@@ -149,25 +149,13 @@ public class ShadowCreatureAI : MonoBehaviour
                 : CreatureState.Patrol;
     }
 
-    private void UpdateAnimationStates()
-    {
-        if (animator != null)
-        {
-            // Se o inimigo estiver a mover-se horizontalmente, ativa a animação de Walk
-            bool isMoving = Mathf.Abs(rb.linearVelocity.x) > 0.1f;
-            animator.SetBool("IsWalking", isMoving);
-        }
-    }
-
     private IEnumerator AttackRoutine()
     {
         isAttacking = true;
         currentState = CreatureState.Attack;
         rb.linearVelocity = new Vector2(0f, rb.linearVelocity.y);
 
-        // DISPARA O TRIGGER DE ATAQUE NO ANIMATOR
-        if (animator != null)
-            animator.SetTrigger("Attack");
+        TriggerAnimator(attackAnimationTrigger);
 
         if (spriteRenderer != null)
             spriteRenderer.color = Color.red;
@@ -254,13 +242,33 @@ public class ShadowCreatureAI : MonoBehaviour
         rb.linearVelocity = Vector2.zero;
         rb.simulated = false;
 
-        if (animator != null && !string.IsNullOrEmpty(deathAnimationTrigger))
-            animator.SetTrigger(deathAnimationTrigger);
+        TriggerAnimator(deathAnimationTrigger);
 
         if (spriteRenderer != null)
             spriteRenderer.color = originalColor;
 
         Destroy(gameObject, 2f);
+    }
+
+    private void TriggerAnimator(string parameterName)
+    {
+        if (animator == null || string.IsNullOrEmpty(parameterName) || !HasAnimatorParameter(parameterName))
+            return;
+
+        animator.SetTrigger(parameterName);
+    }
+
+    private bool HasAnimatorParameter(string parameterName)
+    {
+        int parameterHash = Animator.StringToHash(parameterName);
+
+        foreach (AnimatorControllerParameter parameter in animator.parameters)
+        {
+            if (parameter.nameHash == parameterHash)
+                return true;
+        }
+
+        return false;
     }
 
     private void OnDrawGizmosSelected()
