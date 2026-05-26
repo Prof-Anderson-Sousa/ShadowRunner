@@ -1,10 +1,17 @@
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 public class MorcegoPatrulhaController : MonoBehaviour
 {
     [Header("Movimento Horizontal")]
     [SerializeField] private float velocidade = 2f;
     [SerializeField] private int direcaoInicial = -1;
+    [SerializeField] private float distanciaPatrulhaHorizontal = 2.5f;
+
+    [Header("Altura")]
+    [SerializeField] private bool alinharAlturaComJogador = true;
+    [Tooltip("Altere este valor para subir/descer os morcegos. Negativo desce, positivo sobe.")]
+    [SerializeField] private float offsetAlturaJogador = -0.45f;
 
     [Header("Deteccao de Parede")]
     [SerializeField] private Transform detectorParede;
@@ -26,13 +33,30 @@ public class MorcegoPatrulhaController : MonoBehaviour
     [Header("Morte")]
     [SerializeField] private float tempoParaDestruir = 0.25f;
 
+    [Header("Gerador de Morcegos no Tilemap")]
+    [Tooltip("Marque somente no objeto SpawnerMorcego. Deixe desmarcado no prefab Morcego.")]
+    [SerializeField] private bool usarComoGerador = false;
+    [SerializeField] private bool gerarAoIniciar = true;
+    [SerializeField] private bool limparGeradosAoIniciar = true;
+    [SerializeField] private MorcegoPatrulhaController prefabMorcego;
+    [SerializeField] private Tilemap cenarioTilemap;
+    [SerializeField] private int quantidadeDeMorcegos = 8;
+    [SerializeField] private float alturaAcimaDoChao = 2.2f;
+    [SerializeField] private int margemEsquerdaEmTiles = 5;
+    [SerializeField] private int margemDireitaEmTiles = 5;
+    [SerializeField] private float variacaoAltura = 0.6f;
+    [SerializeField] private string nomeContainerGerados = "Morcegos Gerados";
+
     private Rigidbody2D rb;
     private SpriteRenderer spriteRenderer;
     private Collider2D col;
 
     private int direcaoAtual;
+    private float xInicial;
     private bool morto;
+    private bool alturaAlinhada;
     private float proximoDanoLiberado;
+    private bool configuradoComoGerado;
 
     private void Awake()
     {
@@ -41,18 +65,211 @@ public class MorcegoPatrulhaController : MonoBehaviour
         col = GetComponent<Collider2D>();
 
         direcaoAtual = direcaoInicial >= 0 ? 1 : -1;
+        xInicial = transform.position.x;
+
+        if (!usarComoGerador)
+        {
+            GarantirDetectorParede();
+            AtualizarVisual();
+        }
+    }
+
+    private void Start()
+    {
+        if (usarComoGerador)
+        {
+            if (gerarAoIniciar)
+                GerarMorcegosAoLongoDoTilemap();
+
+            return;
+        }
+
+        TentarAlinharAlturaComJogador();
+    }
+
+    private void FixedUpdate()
+    {
+        if (usarComoGerador || morto)
+            return;
+
+        if (!alturaAlinhada)
+            TentarAlinharAlturaComJogador();
+
+        VerificarLimiteDaPatrulha();
+        Patrulhar();
+        VerificarParede();
+    }
+
+    public void GerarMorcegosAoLongoDoTilemap()
+    {
+        if (!usarComoGerador)
+            return;
+
+        if (prefabMorcego == null)
+        {
+            Debug.LogWarning("[SpawnerMorcego] O campo Prefab Morcego nao foi preenchido.", this);
+            return;
+        }
+
+        if (cenarioTilemap == null)
+        {
+            Debug.LogWarning("[SpawnerMorcego] O campo Cenario Tilemap nao foi preenchido.", this);
+            return;
+        }
+
+        if (quantidadeDeMorcegos <= 0)
+            return;
+
+        Transform container = PrepararContainerGerados();
+        BoundsInt bounds = cenarioTilemap.cellBounds;
+
+        int inicioX = bounds.xMin + margemEsquerdaEmTiles;
+        int fimX = bounds.xMax - margemDireitaEmTiles;
+
+        if (fimX <= inicioX)
+        {
+            inicioX = bounds.xMin;
+            fimX = bounds.xMax;
+        }
+
+        for (int i = 0; i < quantidadeDeMorcegos; i++)
+        {
+            float t = quantidadeDeMorcegos == 1 ? 0.5f : i / (float)(quantidadeDeMorcegos - 1);
+            int cellX = Mathf.RoundToInt(Mathf.Lerp(inicioX, fimX, t));
+
+            if (!TentarEncontrarPontoNoChao(cellX, bounds, out Vector3 posicaoBase))
+                continue;
+
+            float variacao = variacaoAltura > 0f ? Random.Range(-variacaoAltura, variacaoAltura) : 0f;
+            Vector3 posicaoMorcego = posicaoBase + Vector3.up * (alturaAcimaDoChao + variacao);
+
+            MorcegoPatrulhaController morcego = Instantiate(prefabMorcego, posicaoMorcego, Quaternion.identity, container);
+            morcego.ConfigurarComoMorcegoGerado(i);
+        }
+    }
+
+    private Transform PrepararContainerGerados()
+    {
+        Transform container = transform.Find(nomeContainerGerados);
+
+        if (container == null)
+        {
+            GameObject novoContainer = new GameObject(nomeContainerGerados);
+            novoContainer.transform.SetParent(transform);
+            novoContainer.transform.localPosition = Vector3.zero;
+            container = novoContainer.transform;
+        }
+
+        if (limparGeradosAoIniciar)
+        {
+            for (int i = container.childCount - 1; i >= 0; i--)
+            {
+                Transform filho = container.GetChild(i);
+
+                if (Application.isPlaying)
+                    Destroy(filho.gameObject);
+                else
+                    DestroyImmediate(filho.gameObject);
+            }
+        }
+
+        return container;
+    }
+
+    private bool TentarEncontrarPontoNoChao(int cellX, BoundsInt bounds, out Vector3 pontoMundo)
+    {
+        for (int y = bounds.yMax; y >= bounds.yMin; y--)
+        {
+            Vector3Int celula = new Vector3Int(cellX, y, 0);
+
+            if (!cenarioTilemap.HasTile(celula))
+                continue;
+
+            pontoMundo = cenarioTilemap.GetCellCenterWorld(celula);
+            return true;
+        }
+
+        pontoMundo = Vector3.zero;
+        return false;
+    }
+
+    private void ConfigurarComoMorcegoGerado(int indice)
+    {
+        usarComoGerador = false;
+        gerarAoIniciar = false;
+        limparGeradosAoIniciar = false;
+        configuradoComoGerado = true;
+        morto = false;
+        alturaAlinhada = true;
+        xInicial = transform.position.x;
+        direcaoAtual = indice % 2 == 0 ? -1 : 1;
+        gameObject.name = "Morcego_Inimigo_" + (indice + 1).ToString("00");
 
         GarantirDetectorParede();
         AtualizarVisual();
     }
 
-    private void FixedUpdate()
+    private void TentarAlinharAlturaComJogador()
     {
-        if (morto)
+        if (configuradoComoGerado)
+        {
+            alturaAlinhada = true;
+            return;
+        }
+
+        if (!alinharAlturaComJogador)
+        {
+            alturaAlinhada = true;
+            return;
+        }
+
+        Transform jogador = GameManager.Instance != null
+            ? GameManager.Instance.JogadorAtual
+            : null;
+
+        if (jogador == null)
+        {
+            GameObject jogadorObj = GameObject.FindGameObjectWithTag("Player");
+
+            if (jogadorObj != null)
+                jogador = jogadorObj.transform;
+        }
+
+        if (jogador == null)
             return;
 
-        Patrulhar();
-        VerificarParede();
+        Collider2D jogadorCollider = jogador.GetComponent<Collider2D>();
+
+        if (jogadorCollider == null)
+            jogadorCollider = jogador.GetComponentInChildren<Collider2D>();
+
+        float alturaJogador = jogadorCollider != null
+            ? jogadorCollider.bounds.center.y
+            : jogador.position.y;
+
+        transform.position = new Vector3(
+            transform.position.x,
+            alturaJogador + offsetAlturaJogador,
+            transform.position.z
+        );
+
+        alturaAlinhada = true;
+    }
+
+    private void VerificarLimiteDaPatrulha()
+    {
+        float distanciaDoInicio = transform.position.x - xInicial;
+
+        if (direcaoAtual > 0 && distanciaDoInicio >= distanciaPatrulhaHorizontal)
+        {
+            Virar();
+            return;
+        }
+
+        if (direcaoAtual < 0 && distanciaDoInicio <= -distanciaPatrulhaHorizontal)
+        {
+            Virar();
+        }
     }
 
     private void Patrulhar()
@@ -120,7 +337,7 @@ public class MorcegoPatrulhaController : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (morto)
+        if (usarComoGerador || morto)
             return;
 
         if (collision.collider.CompareTag("Player"))
@@ -137,7 +354,7 @@ public class MorcegoPatrulhaController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (morto)
+        if (usarComoGerador || morto)
             return;
 
         if (other.CompareTag("Player"))
@@ -171,7 +388,7 @@ public class MorcegoPatrulhaController : MonoBehaviour
 
     public void ReceberAtaqueEspada()
     {
-        if (morto)
+        if (usarComoGerador || morto)
             return;
 
         int pontosFinais = pontosBaseAoMatar * multiplicadorPontosAoMatar;
@@ -183,7 +400,7 @@ public class MorcegoPatrulhaController : MonoBehaviour
 
     public void BaterSemMatar(Collider2D playerCollider)
     {
-        if (morto)
+        if (usarComoGerador || morto)
             return;
 
         GameManager.Instance?.RemoverPontos(pontosPerdidosAoBaterSemMatar);
@@ -228,6 +445,9 @@ public class MorcegoPatrulhaController : MonoBehaviour
 
     private void OnDrawGizmosSelected()
     {
+        if (usarComoGerador)
+            return;
+
         GarantirDetectorParede();
 
         if (detectorParede == null)

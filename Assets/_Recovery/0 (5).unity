@@ -564,7 +564,37 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MorcegoSpawner
   morcegoPrefab: {fileID: 3518303920374340222, guid: 46d8f2d55cb0d29468864e93fbe60efa, type: 3}
-  posicaoInicial: {x: 0, y: 1.5}
+  painelMissionComplete: {fileID: 0}
+  pausarJogoAoCompletar: 1
+  textoMissionComplete: 'MISSION ONE
+
+    COMPLETE'
+  duracaoAnimacaoMensagem: 1.2
+  posicaoInicialMensagem: {x: 0, y: -220}
+  posicaoFinalMensagem: {x: 0, y: 80}
+  posicaoMorcego1: {x: 4, y: -0.2}
+  posicaoMorcego2: {x: 9, y: -0.2}
+  posicaoMorcego3: {x: 14, y: -0.2}
+  posicaoMorcego4: {x: 19, y: -0.2}
+  posicaoMorcego5: {x: 24, y: -0.2}
+  posicaoMorcego6: {x: 29, y: -0.2}
+  posicaoMorcego7: {x: 34, y: -0.2}
+  posicaoMorcego8: {x: 39, y: -0.2}
+  posicaoMorcego9: {x: 44, y: -0.2}
+  posicaoMorcego10: {x: 49, y: -0.2}
+  posicaoMorcego11: {x: 54, y: -0.2}
+  posicaoMorcego12: {x: 59, y: -0.2}
+  posicaoMorcego13: {x: 64, y: -0.2}
+  posicaoMorcego14: {x: 69, y: -0.2}
+  posicaoMorcego15: {x: 74, y: -0.2}
+  posicaoMorcego16: {x: 79, y: -0.2}
+  posicaoMorcego17: {x: 84, y: -0.2}
+  posicaoMorcego18: {x: 89, y: -0.2}
+  posicaoMorcego19: {x: 94, y: -0.2}
+  posicaoMorcego20: {x: 99, y: -0.2}
+  posicaoMorcego21: {x: 104, y: -0.2}
+  posicaoMorcego22: {x: 109, y: -0.2}
+  posicaoMorcego23: {x: 114, y: -0.2}
 --- !u!4 &381393298
 Transform:
   m_ObjectHideFlags: 0
@@ -977,6 +1007,37 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &611268603
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 611268604}
+  m_Layer: 0
+  m_Name: DetectorParede
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &611268604
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 611268603}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.45, y: 0, z: 0}
+  m_LocalScale: {x: 0.32058296, y: 0.46919608, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1317602458}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &612129099
 GameObject:
@@ -1521,6 +1582,70 @@ RectTransform:
   m_AnchoredPosition: {x: 120, y: -60}
   m_SizeDelta: {x: 220, y: 40}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1001 &780955583
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: -2820287359491013506, guid: 17b8e57b6509b934d92436c43bf671ec, type: 3}
+      propertyPath: forcarTutorialSeNaoChegar
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3518303920374340222, guid: 17b8e57b6509b934d92436c43bf671ec, type: 3}
+      propertyPath: m_Name
+      value: Morcego Tutorial
+      objectReference: {fileID: 0}
+    - target: {fileID: 6337124733880163253, guid: 17b8e57b6509b934d92436c43bf671ec, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -7.85
+      objectReference: {fileID: 0}
+    - target: {fileID: 6337124733880163253, guid: 17b8e57b6509b934d92436c43bf671ec, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.58
+      objectReference: {fileID: 0}
+    - target: {fileID: 6337124733880163253, guid: 17b8e57b6509b934d92436c43bf671ec, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6337124733880163253, guid: 17b8e57b6509b934d92436c43bf671ec, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6337124733880163253, guid: 17b8e57b6509b934d92436c43bf671ec, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6337124733880163253, guid: 17b8e57b6509b934d92436c43bf671ec, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6337124733880163253, guid: 17b8e57b6509b934d92436c43bf671ec, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6337124733880163253, guid: 17b8e57b6509b934d92436c43bf671ec, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6337124733880163253, guid: 17b8e57b6509b934d92436c43bf671ec, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6337124733880163253, guid: 17b8e57b6509b934d92436c43bf671ec, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 6337124733880163253, guid: 17b8e57b6509b934d92436c43bf671ec, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 611268604}
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 17b8e57b6509b934d92436c43bf671ec, type: 3}
 --- !u!1 &780959803
 GameObject:
   m_ObjectHideFlags: 0
@@ -2455,6 +2580,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1207150850}
   m_CullTransparentMesh: 1
+--- !u!4 &1317602458 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6337124733880163253, guid: 17b8e57b6509b934d92436c43bf671ec, type: 3}
+  m_PrefabInstance: {fileID: 780955583}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1475288515
 GameObject:
   m_ObjectHideFlags: 0
@@ -7194,3 +7324,4 @@ SceneRoots:
   - {fileID: 265845676}
   - {fileID: 610109845}
   - {fileID: 1641667299}
+  - {fileID: 780955583}

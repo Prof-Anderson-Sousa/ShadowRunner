@@ -34,6 +34,7 @@ public class PlayerCombat : MonoBehaviour
 
     private Rigidbody2D rb;
     private Animator animator;
+    private AnimacaoPersonagemPorCodigo animacaoPorCodigo;
     private Color originalSpriteColor;
     private int currentHealth;
     private int facingDirection = 1;
@@ -58,6 +59,7 @@ public class PlayerCombat : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
+        animacaoPorCodigo = GetComponent<AnimacaoPersonagemPorCodigo>();
         CacheAttackPoint();
         CacheVisualRenderer();
         CacheAnimatorHashes();
@@ -185,7 +187,10 @@ public class PlayerCombat : MonoBehaviour
         currentHealth = Mathf.Max(0, currentHealth - damage);
         invulnerableUntil = Time.time + invulnerabilityDuration;
 
-        TriggerAnimator(hurtTriggerHash);
+        if (animacaoPorCodigo != null)
+            animacaoPorCodigo.TocarHit();
+        else
+            TriggerAnimator(hurtTriggerHash);
         StartInvulnerabilityFeedback();
         NotifyHealthChanged();
 
@@ -217,7 +222,10 @@ public class PlayerCombat : MonoBehaviour
         }
 
         RestoreSpriteColor();
-        TriggerAnimator(deathTriggerHash);
+        if (animacaoPorCodigo != null)
+            animacaoPorCodigo.TocarMorte();
+        else
+            TriggerAnimator(deathTriggerHash);
 
         foreach (Collider2D collider in GetComponents<Collider2D>())
             collider.enabled = false;

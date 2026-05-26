@@ -15,6 +15,8 @@ public class Movimento : MonoBehaviour
     private Animator animator;
     private SpriteRenderer spriteRenderer;
     private PlayerCombat playerCombat;
+    private AtaqueEspada ataqueEspada;
+    private AnimacaoPersonagemPorCodigo animacaoPorCodigo;
     private Renderer tilemapLimiteEsquerdoRenderer;
     private Collider2D personagemCollider;
 
@@ -27,6 +29,8 @@ public class Movimento : MonoBehaviour
 
     private int movendoHash = Animator.StringToHash("movendo");
     private int saltandoHash = Animator.StringToHash("saltando");
+    private bool temParametroMovendo;
+    private bool temParametroSaltando;
     private float proximaAcaoEspecialLiberada;
 
     private bool controlesBloqueados;
@@ -37,7 +41,11 @@ public class Movimento : MonoBehaviour
         animator = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         playerCombat = GetComponent<PlayerCombat>();
+        ataqueEspada = GetComponent<AtaqueEspada>();
+        animacaoPorCodigo = GetComponent<AnimacaoPersonagemPorCodigo>();
         personagemCollider = GetComponent<Collider2D>();
+        temParametroMovendo = HasAnimatorParameter(movendoHash);
+        temParametroSaltando = HasAnimatorParameter(saltandoHash);
 
         GarantirPeDoPersonagem();
         TentarEncontrarTilemapLimiteEsquerdo();
@@ -62,10 +70,9 @@ public class Movimento : MonoBehaviour
 
             estaNoChao = Physics2D.OverlapCircle(peDoPersonagem.position, 0.2f, chaoLayer);
 
-            if (animator != null)
+            if (PodeAtualizarAnimacaoMovimento())
             {
-                animator.SetBool(movendoHash, horizontalInput != 0);
-                animator.SetBool(saltandoHash, !estaNoChao);
+                AtualizarAnimacaoMovimento();
             }
 
             return;
@@ -85,10 +92,9 @@ public class Movimento : MonoBehaviour
 
         estaNoChao = Physics2D.OverlapCircle(peDoPersonagem.position, 0.2f, chaoLayer);
 
-        if (animator != null)
+        if (PodeAtualizarAnimacaoMovimento())
         {
-            animator.SetBool(movendoHash, horizontalInput != 0);
-            animator.SetBool(saltandoHash, !estaNoChao);
+            AtualizarAnimacaoMovimento();
         }
 
         if (spriteRenderer != null)
@@ -146,7 +152,7 @@ public class Movimento : MonoBehaviour
             if (rb != null)
                 rb.linearVelocity = new Vector2(0f, rb.linearVelocity.y);
 
-            if (animator != null)
+            if (animator != null && temParametroMovendo)
                 animator.SetBool(movendoHash, false);
         }
     }
@@ -205,7 +211,7 @@ public class Movimento : MonoBehaviour
         if (rb != null)
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, impulsoAcaoEspecial);
 
-        Collider2D[] alvos = Physics2D.OverlapCircleAll(transform.position, raioAcaoEspecial);
+        Collider2D[] alvos = Physics2D.OverlapCircleAll(CentroDoPersonagem(), raioAcaoEspecial);
 
         foreach (Collider2D alvo in alvos)
         {
@@ -215,14 +221,68 @@ public class Movimento : MonoBehaviour
                 morcego = alvo.GetComponentInParent<MorcegoController>();
 
             if (morcego != null)
+            {
                 morcego.DerrotarPorAcaoEspecial();
+                continue;
+            }
+
+            MorcegoPatrulhaController morcegoPatrulha = alvo.GetComponent<MorcegoPatrulhaController>();
+
+            if (morcegoPatrulha == null)
+                morcegoPatrulha = alvo.GetComponentInParent<MorcegoPatrulhaController>();
+
+            if (morcegoPatrulha != null)
+                morcegoPatrulha.ReceberAtaqueEspada();
         }
+    }
+
+    private bool PodeAtualizarAnimacaoMovimento()
+    {
+        return (animator != null || animacaoPorCodigo != null)
+            && (ataqueEspada == null || !ataqueEspada.EstaAtacando);
+    }
+
+    private void AtualizarAnimacaoMovimento()
+    {
+        if (animacaoPorCodigo != null)
+        {
+            float velocidadeVertical = rb != null ? rb.linearVelocity.y : 0f;
+            animacaoPorCodigo.AtualizarMovimento(horizontalInput != 0f, estaNoChao, velocidadeVertical);
+        }
+
+        if (temParametroMovendo)
+            animator.SetBool(movendoHash, horizontalInput != 0);
+
+        if (temParametroSaltando)
+            animator.SetBool(saltandoHash, !estaNoChao);
+    }
+
+    private bool HasAnimatorParameter(int parameterHash)
+    {
+        if (animator == null)
+            return false;
+
+        foreach (AnimatorControllerParameter parameter in animator.parameters)
+        {
+            if (parameter.nameHash == parameterHash)
+                return true;
+        }
+
+        return false;
     }
 
     void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.cyan;
-        Gizmos.DrawWireSphere(transform.position, raioAcaoEspecial);
+        Gizmos.DrawWireSphere(CentroDoPersonagem(), raioAcaoEspecial);
+    }
+
+    private Vector2 CentroDoPersonagem()
+    {
+        if (personagemCollider != null)
+            return personagemCollider.bounds.center;
+
+        return transform.position;
     }
 
     void TentarEncontrarTilemapLimiteEsquerdo()

@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 5622161030751856161}
   - component: {fileID: 7549163559188194365}
   - component: {fileID: -7039646208109835308}
+  - component: {fileID: 4742213762249180392}
   m_Layer: 0
   m_Name: Player_ShadowHuntress
   m_TagString: Player
@@ -32,11 +33,12 @@ Transform:
   m_GameObject: {fileID: 652414345626287973}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -6.9908, y: -4.24, z: 0}
+  m_LocalPosition: {x: -6.32, y: -3.9, z: 0}
   m_LocalScale: {x: 5.2607613, y: 4.5788918, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3068017375819552709}
+  - {fileID: 2024490633812316783}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &6620516900216551657
@@ -247,9 +249,9 @@ Rigidbody2D:
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 4
 --- !u!114 &-7039646208109835308
 MonoBehaviour:
@@ -265,18 +267,88 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::AtaqueEspada
   teclaAtaque: 106
   dano: 1
-  alcanceAtaque: 0.9
-  alturaAtaque: 0.8
-  distanciaDoCentro: 0.75
+  raioAtaque: 1.8
   cooldownAtaque: 0.45
   camadaInimigos:
     serializedVersion: 2
     m_Bits: 128
-  pontoAtaque: {fileID: 0}
-  parametroAnimacaoAtaque: Attack
-  estadoAnimacaoAtaque: Attack
+  pontoAtaque: {fileID: 2024490633812316783}
+  distanciaDoCentro: 0.072
+  offsetVerticalAtaque: 0.638
+  parametroAnimacaoAtaque: attack
+  estadoAnimacaoAtaque: attack
   duracaoAnimacaoAtaque: 0.35
-  estadoRetornoAposAtaque: Idle
+  estadoRetornoAposAtaque: idle
+  somAtaque: {fileID: 8300000, guid: 0c86013a2c8b22d4cb0bafed9a4930a9, type: 3}
+  volumeSomAtaque: 1
+  caminhoSomAtaque: Assets/Audio/espada_sound.mp3
+  mostrarDebugAtaque: 1
+--- !u!114 &4742213762249180392
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 652414345626287973}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8eb9d1fdf5d54834b8e8051095e9df05, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AnimacaoPersonagemPorCodigo
+  spriteRendererAlvo: {fileID: 6620516900216551657}
+  desativarAnimator: 1
+  caminhoAseprite: Assets/SHADOW Series - The Blind Huntress/SHADOW Series - The
+    Blind Huntress.aseprite
+  quadrosPorSegundo: 12
+  idle:
+  - {fileID: -5115994710308001857, guid: 85dd3a7211ae98d48b545c6388d7be5f, type: 3}
+  - {fileID: 4983236670878147196, guid: 85dd3a7211ae98d48b545c6388d7be5f, type: 3}
+  - {fileID: -8239714064057982966, guid: 85dd3a7211ae98d48b545c6388d7be5f, type: 3}
+  - {fileID: 5056113293108109755, guid: 85dd3a7211ae98d48b545c6388d7be5f, type: 3}
+  - {fileID: -3068675694314305934, guid: 85dd3a7211ae98d48b545c6388d7be5f, type: 3}
+  - {fileID: -3318550455958719586, guid: 85dd3a7211ae98d48b545c6388d7be5f, type: 3}
+  - {fileID: -11837961455665812, guid: 85dd3a7211ae98d48b545c6388d7be5f, type: 3}
+  - {fileID: 6352534944638883539, guid: 85dd3a7211ae98d48b545c6388d7be5f, type: 3}
+  - {fileID: -8442774084007199235, guid: 85dd3a7211ae98d48b545c6388d7be5f, type: 3}
+  - {fileID: 3870805929383510179, guid: 85dd3a7211ae98d48b545c6388d7be5f, type: 3}
+  - {fileID: 6447837777484929518, guid: 85dd3a7211ae98d48b545c6388d7be5f, type: 3}
+  - {fileID: 4453545136753553813, guid: 85dd3a7211ae98d48b545c6388d7be5f, type: 3}
+  - {fileID: 4453545136753553813, guid: 85dd3a7211ae98d48b545c6388d7be5f, type: 3}
+  run:
+  - {fileID: -4380594388977497288, guid: 85dd3a7211ae98d48b545c6388d7be5f, type: 3}
+  - {fileID: -2972080824161768172, guid: 85dd3a7211ae98d48b545c6388d7be5f, type: 3}
+  - {fileID: -5367021980393471364, guid: 85dd3a7211ae98d48b545c6388d7be5f, type: 3}
+  - {fileID: 6059633660772424754, guid: 85dd3a7211ae98d48b545c6388d7be5f, type: 3}
+  - {fileID: 6715427985411700783, guid: 85dd3a7211ae98d48b545c6388d7be5f, type: 3}
+  - {fileID: -3122471135312704566, guid: 85dd3a7211ae98d48b545c6388d7be5f, type: 3}
+  - {fileID: 550950062889113853, guid: 85dd3a7211ae98d48b545c6388d7be5f, type: 3}
+  - {fileID: -2895588032819501034, guid: 85dd3a7211ae98d48b545c6388d7be5f, type: 3}
+  - {fileID: -2895588032819501034, guid: 85dd3a7211ae98d48b545c6388d7be5f, type: 3}
+  jump:
+  - {fileID: 5710114074043892463, guid: 85dd3a7211ae98d48b545c6388d7be5f, type: 3}
+  - {fileID: -743258439221417623, guid: 85dd3a7211ae98d48b545c6388d7be5f, type: 3}
+  - {fileID: 3045925884818134162, guid: 85dd3a7211ae98d48b545c6388d7be5f, type: 3}
+  - {fileID: 9128586454647975817, guid: 85dd3a7211ae98d48b545c6388d7be5f, type: 3}
+  - {fileID: 9128586454647975817, guid: 85dd3a7211ae98d48b545c6388d7be5f, type: 3}
+  fall:
+  - {fileID: 1968005606709512604, guid: 85dd3a7211ae98d48b545c6388d7be5f, type: 3}
+  - {fileID: 2158598976720970232, guid: 85dd3a7211ae98d48b545c6388d7be5f, type: 3}
+  - {fileID: 1028964587735490040, guid: 85dd3a7211ae98d48b545c6388d7be5f, type: 3}
+  - {fileID: -47788477998650817, guid: 85dd3a7211ae98d48b545c6388d7be5f, type: 3}
+  - {fileID: -47788477998650817, guid: 85dd3a7211ae98d48b545c6388d7be5f, type: 3}
+  attack:
+  - {fileID: 5867094234227409488, guid: 85dd3a7211ae98d48b545c6388d7be5f, type: 3}
+  - {fileID: 5169409397231788872, guid: 85dd3a7211ae98d48b545c6388d7be5f, type: 3}
+  - {fileID: 8721105543990593292, guid: 85dd3a7211ae98d48b545c6388d7be5f, type: 3}
+  - {fileID: 7004089020798028464, guid: 85dd3a7211ae98d48b545c6388d7be5f, type: 3}
+  - {fileID: 7004089020798028464, guid: 85dd3a7211ae98d48b545c6388d7be5f, type: 3}
+  hit:
+  - {fileID: -6884412813085084328, guid: 85dd3a7211ae98d48b545c6388d7be5f, type: 3}
+  - {fileID: 4710622698660628114, guid: 85dd3a7211ae98d48b545c6388d7be5f, type: 3}
+  - {fileID: -8924540342385538103, guid: 85dd3a7211ae98d48b545c6388d7be5f, type: 3}
+  - {fileID: -7226713516670001234, guid: 85dd3a7211ae98d48b545c6388d7be5f, type: 3}
+  - {fileID: -7226713516670001234, guid: 85dd3a7211ae98d48b545c6388d7be5f, type: 3}
+  death: []
 --- !u!1 &1078736061660003206
 GameObject:
   m_ObjectHideFlags: 0
@@ -305,6 +377,37 @@ Transform:
   m_LocalPosition: {x: -0.07020503, y: 0.47781003, z: 0}
   m_LocalScale: {x: 0.24992892, y: 0.34825805, z: 1}
   m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 351331260744587008}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &6982508849812318046
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2024490633812316783}
+  m_Layer: 0
+  m_Name: PontoAtaque
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2024490633812316783
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6982508849812318046}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.072, y: 0.638, z: 0}
+  m_LocalScale: {x: 0.19188012, y: 0.34346107, z: 0.39012}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 351331260744587008}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

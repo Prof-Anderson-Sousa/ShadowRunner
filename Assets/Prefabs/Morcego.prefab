@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 5311093718627473237}
   - component: {fileID: 716674949597027287}
   - component: {fileID: 2199618567026176116}
+  - component: {fileID: -2820287359491013506}
   m_Layer: 7
   m_Name: Morcego
   m_TagString: Inimigo
@@ -132,7 +133,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDamping: 0
   m_AngularDamping: 0.05
-  m_GravityScale: 1
+  m_GravityScale: 0
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -190,17 +191,68 @@ MonoBehaviour:
   m_GameObject: {fileID: 3518303920374340222}
   m_Enabled: 1
   m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f730bf3c722ee24caff7c6838b7391d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MorcegoPatrulhaController
+  velocidade: 2
+  direcaoInicial: -1
+  distanciaPatrulhaHorizontal: 2.5
+  alinharAlturaComJogador: 1
+  offsetAlturaJogador: -1.9
+  detectorParede: {fileID: 0}
+  distanciaDeteccaoParede: 0.25
+  camadaParedeOuTilemap:
+    serializedVersion: 2
+    m_Bits: 64
+  pontosAoEncostarNoPlayer: 25
+  pontosPerdidosAoBaterSemMatar: 40
+  pontosBaseAoMatar: 100
+  multiplicadorPontosAoMatar: 3
+  essenciaAoMatar: 1
+  forcaEmpurraoHorizontal: 7
+  forcaEmpurraoVertical: 4
+  cooldownDanoPlayer: 0.8
+  tempoParaDestruir: 0.25
+--- !u!114 &-2820287359491013506
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3518303920374340222}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c3294327c7a9ef343b4de5b9714e9314, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MorcegoController
+  morcegoDoTutorial: 0
   velocidade: 2
   distanciaDoJogador: 2.5
-  offsetBalao: {x: -1.1, y: 1.1}
-  falaTutorial: 'A cidade foi tomada por bichos!
-
-    Eu sou o primeiro, mas ha varios espalhados pela cidade.
-
-    Sua missao e matar os bichos.'
+  iniciarTutorialAutomaticamente: 1
+  forcarTutorialSeNaoChegar: 0
+  tempoMaximoParaForcarTutorial: 8
+  mostrarLogsTutorial: 1
+  protegerDuranteTutorial: 1
+  offsetSpawnY: 2
+  velocidadeFugaX: 4
+  velocidadeFugaY: 5
+  distanciaParaDestruir: 8
+  fala1: "Voc\xEA acordou sem saber onde esta... bem-vindo ao pesadelo."
+  fala2: Esta cidade foi tomada pelas criaturas das sombras. Elas nos perseguem sem
+    parar.
+  fala3: "Colete Ess\xEAncia derrotando inimigos. Ela \xE9 sua \xFAnica fonte de
+    poder aqui."
+  fala4: "Use a A\xE7\xE3o Especial com sabedoria \u2014 ela consome Ess\xEAncia,
+    mas pode salvar sua vida."
+  fala5: "Sobreviva o m\xE1ximo que puder. A cidade s\xF3 fica mais hostil com o
+    tempo. Boa sorte, sobrevivente."
+  tempoParaAvancarFala: 10
   recompensaPontos: 100
   recompensaEssencia: 1
   recompensaPontosAcaoEspecial: 60
+  painelLargura: 760
+  painelAltura: 160
+  painelMargemInferior: 55
+  fonteTamanhoFala: 28
+  fonteTamanhoIndicador: 24
+  fonteTamanhoNome: 20

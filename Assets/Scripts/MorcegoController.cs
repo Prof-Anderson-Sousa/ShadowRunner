@@ -12,11 +12,15 @@ public class MorcegoController : MonoBehaviour
     [Tooltip("Ajuste para descer/subir o morcego no spawn. Valores negativos descem.")]
     [SerializeField] private float offsetSpawnY = -1.0f;
 
+    [Header("Tutorial")]
+    [Tooltip("Se marcado, o morcego nao morre antes de terminar o dialogo do tutorial.")]
+    [SerializeField] private bool protegerDuranteTutorial = true;
+
     [Header("Fuga apos dialogo")]
-    [Tooltip("Velocidade horizontal ao fugir (unidades/s).")]
+    [Tooltip("Velocidade horizontal ao fugir, em unidades por segundo.")]
     [SerializeField] private float velocidadeFugaX = 4f;
 
-    [Tooltip("Velocidade vertical ao fugir (unidades/s). Positivo = sobe.")]
+    [Tooltip("Velocidade vertical ao fugir. Positivo faz subir.")]
     [SerializeField] private float velocidadeFugaY = 5f;
 
     [Tooltip("Quantas unidades acima da camera o morcego precisa chegar para ser destruido.")]
@@ -38,7 +42,7 @@ public class MorcegoController : MonoBehaviour
     [SerializeField] private int recompensaPontosAcaoEspecial = 60;
 
     [Header("Visual do Dialogo")]
-    [Tooltip("Largura do painel em pixels (referencia 1920x1080).")]
+    [Tooltip("Largura do painel em pixels, referencia 1920x1080.")]
     [SerializeField] private float painelLargura = 760f;
 
     [Tooltip("Altura do painel em pixels.")]
@@ -67,17 +71,17 @@ public class MorcegoController : MonoBehaviour
     private TMP_Text textoBalao;
     private TMP_Text textoIndicador;
 
-    private bool morto = false;
-    private bool chegouPertoDoJogador = false;
-    private bool dialogoAtivo = false;
-    private bool dialogoEncerrado = false;
-    private bool fugindo = false;
+    private bool morto;
+    private bool chegouPertoDoJogador;
+    private bool dialogoAtivo;
+    private bool dialogoEncerrado;
+    private bool fugindo;
 
     private string[] falas;
-    private int indiceFalaAtual = 0;
-    private float contadorTempoFala = 0f;
+    private int indiceFalaAtual;
+    private float contadorTempoFala;
 
-    void Start()
+    private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
@@ -94,8 +98,11 @@ public class MorcegoController : MonoBehaviour
         TentarEncontrarJogador();
     }
 
-    void Update()
+    private void Update()
     {
+        if (morto)
+            return;
+
         if (fugindo)
         {
             VerificarSaidaDeTela();
@@ -114,17 +121,12 @@ public class MorcegoController : MonoBehaviour
         }
 
         if (contadorTempoFala >= tempoParaAvancarFala)
-        {
             AvancarFala();
-        }
     }
 
-    void FixedUpdate()
+    private void FixedUpdate()
     {
-        if (morto)
-            return;
-
-        if (fugindo)
+        if (morto || fugindo || dialogoAtivo)
             return;
 
         if (jogador == null)
@@ -159,7 +161,7 @@ public class MorcegoController : MonoBehaviour
         AtualizarDirecaoVisual(direcaoX);
     }
 
-    void TentarEncontrarJogador()
+    private void TentarEncontrarJogador()
     {
         if (GameManager.Instance != null && GameManager.Instance.JogadorAtual != null)
         {
@@ -177,13 +179,13 @@ public class MorcegoController : MonoBehaviour
         }
     }
 
-    void AtualizarDirecaoVisual(float direcaoX)
+    private void AtualizarDirecaoVisual(float direcaoX)
     {
         if (spriteRenderer != null)
             spriteRenderer.flipX = direcaoX < 0f;
     }
 
-    void BloquearControleJogador(bool bloquear)
+    private void BloquearControleJogador(bool bloquear)
     {
         if (movimentoJogador == null)
         {
@@ -198,9 +200,9 @@ public class MorcegoController : MonoBehaviour
             movimentoJogador.SetControlesBloqueados(bloquear);
     }
 
-    void IniciarDialogo()
+    private void IniciarDialogo()
     {
-        if (canvasRaiz != null)
+        if (canvasRaiz != null || dialogoAtivo || dialogoEncerrado)
             return;
 
         indiceFalaAtual = 0;
@@ -214,7 +216,7 @@ public class MorcegoController : MonoBehaviour
         ExibirFalaAtual();
     }
 
-    void AvancarFala()
+    private void AvancarFala()
     {
         indiceFalaAtual++;
 
@@ -228,7 +230,7 @@ public class MorcegoController : MonoBehaviour
         ExibirFalaAtual();
     }
 
-    void ExibirFalaAtual()
+    private void ExibirFalaAtual()
     {
         contadorTempoFala = 0f;
 
@@ -243,7 +245,7 @@ public class MorcegoController : MonoBehaviour
             textoIndicador.text = ultima ? "[ Enter ]  Fechar" : "[ Enter ]  Continuar  ▼";
     }
 
-    void EncerrarDialogo()
+    private void EncerrarDialogo()
     {
         dialogoAtivo = false;
         dialogoEncerrado = true;
@@ -257,8 +259,11 @@ public class MorcegoController : MonoBehaviour
         }
     }
 
-    void IniciarFuga()
+    private void IniciarFuga()
     {
+        if (morto)
+            return;
+
         BloquearControleJogador(false);
 
         fugindo = true;
@@ -278,14 +283,20 @@ public class MorcegoController : MonoBehaviour
                 ? -Mathf.Sign(jogador.position.x - transform.position.x)
                 : 1f;
 
+            if (Mathf.Approximately(direcaoFugaX, 0f))
+                direcaoFugaX = 1f;
+
             rb.linearVelocity = new Vector2(direcaoFugaX * velocidadeFugaX, velocidadeFugaY);
 
             AtualizarDirecaoVisual(direcaoFugaX);
         }
     }
 
-    void VerificarSaidaDeTela()
+    private void VerificarSaidaDeTela()
     {
+        if (morto)
+            return;
+
         if (camPrincipal == null)
         {
             Destroy(gameObject);
@@ -303,7 +314,7 @@ public class MorcegoController : MonoBehaviour
         }
     }
 
-    void CriarPainelTela()
+    private void CriarPainelTela()
     {
         canvasRaiz = new GameObject(
             "DialogoMorcego_Canvas",
@@ -382,7 +393,7 @@ public class MorcegoController : MonoBehaviour
         textoNome.fontStyle = FontStyles.Bold;
         textoNome.color = new Color(0.72f, 0.52f, 1f, 1f);
         textoNome.alignment = TextAlignmentOptions.MidlineLeft;
-        textoNome.enableWordWrapping = false;
+        textoNome.textWrappingMode = TextWrappingModes.NoWrap;
         textoNome.raycastTarget = false;
 
         GameObject textoObj = new GameObject("Texto", typeof(RectTransform), typeof(TextMeshProUGUI));
@@ -398,7 +409,7 @@ public class MorcegoController : MonoBehaviour
         textoBalao.fontSize = fonteTamanhoFala;
         textoBalao.color = Color.white;
         textoBalao.alignment = TextAlignmentOptions.MidlineLeft;
-        textoBalao.enableWordWrapping = true;
+        textoBalao.textWrappingMode = TextWrappingModes.Normal;
         textoBalao.raycastTarget = false;
 
         GameObject linhaObj = new GameObject("Linha", typeof(RectTransform), typeof(Image));
@@ -427,19 +438,22 @@ public class MorcegoController : MonoBehaviour
         textoIndicador.fontSize = fonteTamanhoIndicador;
         textoIndicador.color = new Color(0.75f, 0.65f, 1f, 1f);
         textoIndicador.alignment = TextAlignmentOptions.MidlineRight;
-        textoIndicador.enableWordWrapping = false;
+        textoIndicador.textWrappingMode = TextWrappingModes.NoWrap;
         textoIndicador.raycastTarget = false;
     }
 
-    void OnTriggerEnter2D(Collider2D col)
+    private void OnTriggerEnter2D(Collider2D col)
     {
-        if (fugindo)
+        if (morto || fugindo)
             return;
 
         if (col.CompareTag("Projetil"))
         {
             Destroy(col.gameObject);
-            Derrotar(recompensaPontos, recompensaEssencia);
+
+            if (PodeReceberDano())
+                Derrotar(recompensaPontos, recompensaEssencia);
+
             return;
         }
 
@@ -458,7 +472,9 @@ public class MorcegoController : MonoBehaviour
 
             if (movimentoPlayer != null && veioDeCima && estaCaindo)
             {
-                Derrotar(recompensaPontos, recompensaEssencia);
+                if (PodeReceberDano())
+                    Derrotar(recompensaPontos, recompensaEssencia);
+
                 movimentoPlayer.QuicarAposPisar();
                 return;
             }
@@ -472,17 +488,36 @@ public class MorcegoController : MonoBehaviour
         }
     }
 
-    public void DerrotarPorAcaoEspecial()
+    private bool PodeReceberDano()
     {
-        Derrotar(recompensaPontosAcaoEspecial, 0);
+        if (!protegerDuranteTutorial)
+            return true;
+
+        return dialogoEncerrado && !dialogoAtivo;
+    }
+
+    public void ReceberAtaqueEspada()
+    {
+        if (!PodeReceberDano())
+            return;
+
+        Derrotar(recompensaPontos, recompensaEssencia);
     }
 
     public void DerrotarPorAtaqueEspada()
     {
-        Derrotar(recompensaPontos, recompensaEssencia);
+        ReceberAtaqueEspada();
     }
 
-    void Derrotar(int pontos, int essencia)
+    public void DerrotarPorAcaoEspecial()
+    {
+        if (!PodeReceberDano())
+            return;
+
+        Derrotar(recompensaPontosAcaoEspecial, 0);
+    }
+
+    private void Derrotar(int pontos, int essencia)
     {
         if (morto)
             return;
@@ -491,7 +526,7 @@ public class MorcegoController : MonoBehaviour
         Morrer();
     }
 
-    void Morrer()
+    private void Morrer()
     {
         morto = true;
         fugindo = false;
@@ -510,6 +545,12 @@ public class MorcegoController : MonoBehaviour
 
         if (col != null)
             col.enabled = false;
+
+        if (rb != null)
+        {
+            rb.linearVelocity = Vector2.zero;
+            rb.gravityScale = 0f;
+        }
 
         Destroy(gameObject, 0.4f);
     }

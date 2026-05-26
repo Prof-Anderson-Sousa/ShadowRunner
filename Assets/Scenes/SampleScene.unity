@@ -564,7 +564,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MorcegoSpawner
   morcegoPrefab: {fileID: 3518303920374340222, guid: 46d8f2d55cb0d29468864e93fbe60efa, type: 3}
-  posicaoInicial: {x: 0, y: 1.5}
+  posicaoMorcego1: {x: 4, y: -0.2}
+  posicaoMorcego2: {x: 9, y: -0.2}
+  posicaoMorcego3: {x: 14, y: -0.2}
+  posicaoMorcego4: {x: 19, y: -0.2}
 --- !u!4 &381393298
 Transform:
   m_ObjectHideFlags: 0
@@ -4121,7 +4124,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b005439743aae4a429380423fd145fdd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
-  personagemPrefab: {fileID: 6924496683675230762, guid: 0af1d153926ea1145abe84fa1deed7d8, type: 3}
+  personagemPrefab: {fileID: 652414345626287973, guid: 7167f52102234d74584f818204115f71, type: 3}
   spawnPoint: {fileID: 341491642}
   pontuacaoTexto: {fileID: 622042976}
   essenciaTexto: {fileID: 736105580}
