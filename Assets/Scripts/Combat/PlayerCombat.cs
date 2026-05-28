@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 [DefaultExecutionOrder(50)]
@@ -48,6 +49,7 @@ public class PlayerCombat : MonoBehaviour
     private int attackTriggerHash;
     private int hurtTriggerHash;
     private int deathTriggerHash;
+    private HashSet<int> dashHitIds = new HashSet<int>();
 
     public bool isDashing { get; private set; }
     public bool IsDead { get; private set; }
@@ -175,6 +177,7 @@ public class PlayerCombat : MonoBehaviour
             return;
 
         isDashing = true;
+        dashHitIds.Clear();
         dashEndTime = Time.time + dashDuration;
         nextDashTime = Time.time + dashCooldown;
         rb.linearVelocity = new Vector2(facingDirection * dashSpeed, rb.linearVelocity.y);
@@ -281,7 +284,17 @@ public class PlayerCombat : MonoBehaviour
         if (isDashing) DashHitEnemy(other);
     }
 
+    private void OnTriggerStay2D(Collider2D other)
+    {
+        if (isDashing) DashHitEnemy(other);
+    }
+
     private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (isDashing) DashHitEnemy(collision.collider);
+    }
+
+    private void OnCollisionStay2D(Collision2D collision)
     {
         if (isDashing) DashHitEnemy(collision.collider);
     }
@@ -289,6 +302,7 @@ public class PlayerCombat : MonoBehaviour
     private void DashHitEnemy(Collider2D other)
     {
         if (IsDead) return;
+        if (!dashHitIds.Add(other.GetInstanceID())) return;
 
         MorcegoPatrulhaController bat = other.GetComponent<MorcegoPatrulhaController>()
                                      ?? other.GetComponentInParent<MorcegoPatrulhaController>();
