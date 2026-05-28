@@ -363,8 +363,7 @@ public class MorcegoPatrulhaController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (usarComoGerador || morto)
-            return;
+        if (usarComoGerador || morto) return;
 
         if (other.CompareTag("Projetil"))
         {
@@ -375,19 +374,30 @@ public class MorcegoPatrulhaController : MonoBehaviour
 
         if (other.CompareTag("Player"))
         {
-            PlayerCombat combat = other.GetComponent<PlayerCombat>()
-                               ?? other.GetComponentInParent<PlayerCombat>();
-            if (combat != null && combat.isDashing)
-                ReceberAtaqueEspada();
-            else
-                BaterNoPlayer(other);
+            VerificarContatoComPlayer(other);
             return;
         }
 
         if (EstaNaLayerSelecionada(other.gameObject.layer, camadaParedeOuTilemap))
-        {
             Virar();
-        }
+    }
+
+    private void OnTriggerStay2D(Collider2D other)
+    {
+        if (usarComoGerador || morto) return;
+
+        if (other.CompareTag("Player"))
+            VerificarContatoComPlayer(other);
+    }
+
+    private void VerificarContatoComPlayer(Collider2D playerCollider)
+    {
+        PlayerCombat combat = playerCollider.GetComponent<PlayerCombat>()
+                           ?? playerCollider.GetComponentInParent<PlayerCombat>();
+        if (combat != null && combat.isDashing)
+            ReceberAtaqueEspada();
+        else
+            BaterNoPlayer(playerCollider);
     }
 
     private bool EstaNaLayerSelecionada(int layer, LayerMask layerMask)
