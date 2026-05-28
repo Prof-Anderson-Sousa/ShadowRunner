@@ -18,6 +18,7 @@ public class PlayerCombat : MonoBehaviour
     [SerializeField] private float dashDuration = 0.15f;
     [SerializeField] private float dashCooldown = 1.5f;
     [SerializeField] private KeyCode dashKey = KeyCode.LeftShift;
+    [SerializeField] private int dashDamage = 1;
 
     [Header("Vida")]
     [SerializeField] private int maxHealth = 5;
@@ -228,10 +229,10 @@ public class PlayerCombat : MonoBehaviour
             TriggerAnimator(deathTriggerHash);
 
         foreach (Collider2D collider in GetComponents<Collider2D>())
-            collider.enabled = false;
+            if (collider.isTrigger) collider.enabled = false;
 
-        rb.linearVelocity = Vector2.zero;
-        rb.simulated = false;
+        rb.linearVelocity = new Vector2(0f, rb.linearVelocity.y);
+        rb.constraints = RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezeRotation;
 
         StartCoroutine(DeathRoutine());
     }
@@ -273,6 +274,29 @@ public class PlayerCombat : MonoBehaviour
     {
         if (visualRenderer != null)
             visualRenderer.color = originalSpriteColor;
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (isDashing) DashHitEnemy(other);
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (isDashing) DashHitEnemy(collision.collider);
+    }
+
+    private void DashHitEnemy(Collider2D other)
+    {
+        if (IsDead) return;
+
+        MorcegoPatrulhaController bat = other.GetComponent<MorcegoPatrulhaController>()
+                                     ?? other.GetComponentInParent<MorcegoPatrulhaController>();
+        if (bat != null) { bat.ReceberAtaqueEspada(); return; }
+
+        ShadowCreatureAI shadow = other.GetComponent<ShadowCreatureAI>()
+                               ?? other.GetComponentInParent<ShadowCreatureAI>();
+        if (shadow != null) shadow.TakeDamage(dashDamage);
     }
 
     private void TriggerAnimator(int triggerHash, string fallbackStateName = "")
