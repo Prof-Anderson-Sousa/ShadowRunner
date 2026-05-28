@@ -93,27 +93,6 @@ public class PlayerCombat : MonoBehaviour
             return;
 
         rb.linearVelocity = new Vector2(facingDirection * dashSpeed, rb.linearVelocity.y);
-        DashOverlapCheck();
-    }
-
-    private void DashOverlapCheck()
-    {
-        Collider2D col = GetComponent<Collider2D>();
-        if (col == null) return;
-
-        ContactFilter2D filter = new ContactFilter2D();
-        filter.useTriggers = true;
-        filter.useLayerMask = false;
-        filter.useDepth = false;
-
-        List<Collider2D> results = new List<Collider2D>();
-        col.OverlapCollider(filter, results);
-
-        foreach (Collider2D hit in results)
-        {
-            if (hit.gameObject != gameObject)
-                DashHitEnemy(hit);
-        }
     }
 
     private void CacheVisualRenderer()
@@ -202,6 +181,33 @@ public class PlayerCombat : MonoBehaviour
         dashEndTime = Time.time + dashDuration;
         nextDashTime = Time.time + dashCooldown;
         rb.linearVelocity = new Vector2(facingDirection * dashSpeed, rb.linearVelocity.y);
+        PerformDashAttack();
+    }
+
+    private void PerformDashAttack()
+    {
+        float dashDistance = dashSpeed * dashDuration;
+        Collider2D ownCol = GetComponent<Collider2D>();
+        Vector2 origin = ownCol != null ? (Vector2)ownCol.bounds.center : (Vector2)transform.position;
+        Vector2 size   = ownCol != null ? (Vector2)ownCol.bounds.size   : new Vector2(0.5f, 1f);
+
+        ContactFilter2D filter = new ContactFilter2D();
+        filter.useTriggers = true;
+        filter.useLayerMask = false;
+
+        RaycastHit2D[] hits = new RaycastHit2D[16];
+        int count = Physics2D.BoxCast(origin, size, 0f, new Vector2(facingDirection, 0f), filter, hits, dashDistance);
+
+        Debug.Log($"[Dash] BoxCast hits: {count}, direction: {facingDirection}, distance: {dashDistance}");
+
+        for (int i = 0; i < count; i++)
+        {
+            if (hits[i].collider != null && hits[i].collider.gameObject != gameObject)
+            {
+                Debug.Log($"[Dash] Hitting: {hits[i].collider.gameObject.name}");
+                DashHitEnemy(hits[i].collider);
+            }
+        }
     }
 
     public void TakeDamage(int damage)
