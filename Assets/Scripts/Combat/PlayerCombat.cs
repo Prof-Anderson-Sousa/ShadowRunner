@@ -181,6 +181,7 @@ public class PlayerCombat : MonoBehaviour
         dashEndTime = Time.time + dashDuration;
         nextDashTime = Time.time + dashCooldown;
         rb.linearVelocity = new Vector2(facingDirection * dashSpeed, rb.linearVelocity.y);
+        Debug.Log($"[Player] Dash iniciado, isDashing={isDashing}, dir={facingDirection}");
     }
 
     public void TakeDamage(int damage)

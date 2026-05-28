@@ -394,6 +394,7 @@ public class MorcegoPatrulhaController : MonoBehaviour
     {
         PlayerCombat combat = playerCollider.GetComponent<PlayerCombat>()
                            ?? playerCollider.GetComponentInParent<PlayerCombat>();
+        Debug.Log($"[Morcego] VerificarContato: combat={combat != null}, isDashing={combat?.isDashing}, playerObj={playerCollider.gameObject.name}");
         if (combat != null && combat.isDashing)
             ReceberAtaqueEspada();
         else
