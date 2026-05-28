@@ -460,6 +460,9 @@ public class MorcegoPatrulhaController : MonoBehaviour
         if (col != null)
             col.enabled = false;
 
+        if (spriteRenderer != null)
+            spriteRenderer.color = Color.red;
+
         Destroy(gameObject, tempoParaDestruir);
     }
 
