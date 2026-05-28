@@ -392,8 +392,8 @@ public class MorcegoPatrulhaController : MonoBehaviour
 
     private void VerificarContatoComPlayer(Collider2D playerCollider)
     {
-        PlayerController controller = playerCollider.GetComponent<PlayerController>()
-                                   ?? playerCollider.GetComponentInParent<PlayerController>();
+        PlayerMovement controller = playerCollider.GetComponent<PlayerMovement>()
+                                   ?? playerCollider.GetComponentInParent<PlayerMovement>();
         if (controller != null && controller.IsDashing)
         {
             ReceberAtaqueEspada();
