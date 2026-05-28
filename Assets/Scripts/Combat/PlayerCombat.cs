@@ -101,8 +101,15 @@ public class PlayerCombat : MonoBehaviour
         Collider2D col = GetComponent<Collider2D>();
         if (col == null) return;
 
-        Collider2D[] hits = Physics2D.OverlapBoxAll(col.bounds.center, col.bounds.size * 1.1f, 0f);
-        foreach (Collider2D hit in hits)
+        ContactFilter2D filter = new ContactFilter2D();
+        filter.useTriggers = true;
+        filter.useLayerMask = false;
+        filter.useDepth = false;
+
+        List<Collider2D> results = new List<Collider2D>();
+        col.OverlapCollider(filter, results);
+
+        foreach (Collider2D hit in results)
         {
             if (hit.gameObject != gameObject)
                 DashHitEnemy(hit);
