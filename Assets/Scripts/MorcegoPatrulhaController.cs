@@ -375,7 +375,12 @@ public class MorcegoPatrulhaController : MonoBehaviour
 
         if (other.CompareTag("Player"))
         {
-            BaterNoPlayer(other);
+            PlayerCombat combat = other.GetComponent<PlayerCombat>()
+                               ?? other.GetComponentInParent<PlayerCombat>();
+            if (combat != null && combat.isDashing)
+                ReceberAtaqueEspada();
+            else
+                BaterNoPlayer(other);
             return;
         }
 
