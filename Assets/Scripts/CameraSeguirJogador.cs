@@ -42,7 +42,8 @@ public class CameraSeguirJogador : MonoBehaviour
             deslocamentoHorizontal = Mathf.Sign(alvoRb.linearVelocity.x) * antecipacaoHorizontal;
 
         Vector3 destino = alvo.position + offset + new Vector3(deslocamentoHorizontal, 0f, 0f);
-        destino.x = Mathf.Max(destino.x, CalcularLimiteEsquerdoCamera());
+        
+        //destino.x = Mathf.Max(destino.x, CalcularLimiteEsquerdoCamera());
         destino.y = Mathf.Clamp(destino.y, limiteInferior, limiteSuperior);
         destino.z = offset.z;
         transform.position = Vector3.SmoothDamp(transform.position, destino, ref velocidadeAtual, suavizacao);

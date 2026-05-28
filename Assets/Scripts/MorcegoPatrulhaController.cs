@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -7,6 +8,7 @@ public class MorcegoPatrulhaController : MonoBehaviour
     [SerializeField] private float velocidade = 2f;
     [SerializeField] private int direcaoInicial = -1;
     [SerializeField] private float distanciaPatrulhaHorizontal = 2.5f;
+    [SerializeField] private float atrasoInicio = 2f;
 
     [Header("Altura")]
     [SerializeField] private bool alinharAlturaComJogador = true;
@@ -54,6 +56,7 @@ public class MorcegoPatrulhaController : MonoBehaviour
     private int direcaoAtual;
     private float xInicial;
     private bool morto;
+    private bool ativo;
     private bool alturaAlinhada;
     private float proximoDanoLiberado;
     private bool configuradoComoGerado;
@@ -74,22 +77,27 @@ public class MorcegoPatrulhaController : MonoBehaviour
         }
     }
 
-    private void Start()
+    private IEnumerator Start()
     {
         if (usarComoGerador)
         {
             if (gerarAoIniciar)
                 GerarMorcegosAoLongoDoTilemap();
 
-            return;
+            yield break;
         }
 
         TentarAlinharAlturaComJogador();
+
+        yield return new WaitUntil(() =>
+            MenuController.Instance == null || MenuController.Instance.JogoIniciado);
+        yield return new WaitForSeconds(atrasoInicio);
+        ativo = true;
     }
 
     private void FixedUpdate()
     {
-        if (usarComoGerador || morto)
+        if (usarComoGerador || morto || !ativo)
             return;
 
         if (!alturaAlinhada)
@@ -201,6 +209,7 @@ public class MorcegoPatrulhaController : MonoBehaviour
         configuradoComoGerado = true;
         morto = false;
         alturaAlinhada = true;
+        ativo = true;
         xInicial = transform.position.x;
         direcaoAtual = indice % 2 == 0 ? -1 : 1;
         gameObject.name = "Morcego_Inimigo_" + (indice + 1).ToString("00");
@@ -357,6 +366,13 @@ public class MorcegoPatrulhaController : MonoBehaviour
         if (usarComoGerador || morto)
             return;
 
+        if (other.CompareTag("Projetil"))
+        {
+            Destroy(other.gameObject);
+            ReceberAtaqueEspada();
+            return;
+        }
+
         if (other.CompareTag("Player"))
         {
             BaterNoPlayer(other);
@@ -382,6 +398,10 @@ public class MorcegoPatrulhaController : MonoBehaviour
         proximoDanoLiberado = Time.time + cooldownDanoPlayer;
 
         GameManager.Instance?.RemoverPontos(pontosAoEncostarNoPlayer);
+
+        PlayerCombat combat = playerCollider.GetComponent<PlayerCombat>()
+                           ?? playerCollider.GetComponentInParent<PlayerCombat>();
+        combat?.TakeDamage(1);
 
         EmpurrarPlayer(playerCollider);
     }

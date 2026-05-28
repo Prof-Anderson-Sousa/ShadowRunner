@@ -8,6 +8,7 @@ public class Movimento : MonoBehaviour
     [SerializeField] private int velocidade = 5;
     [SerializeField] private Transform peDoPersonagem;
     [SerializeField] private LayerMask chaoLayer;
+    [SerializeField] private float raioDeteccaoParede = 0.15f;
     [SerializeField] private string nomeTilemapLimiteEsquerdo = "Cenário Tilemap";
     [SerializeField] private float margemLimiteEsquerdo = 0.2f;
 
@@ -135,8 +136,27 @@ public class Movimento : MonoBehaviour
             return;
         }
 
+        float velX = horizontalInput * velocidade;
+
+        if (!estaNoChao && velX != 0f)
+        {
+            Vector2 direcao = velX > 0 ? Vector2.right : Vector2.left;
+            float metade = personagemCollider != null ? personagemCollider.bounds.extents.x : 0.2f;
+            bool paredeNaFrente = Physics2D.Raycast(transform.position, direcao, metade + raioDeteccaoParede, chaoLayer);
+            if (paredeNaFrente)
+                velX = 0f;
+        }
+
         if (rb != null)
-            rb.linearVelocity = new Vector2(horizontalInput * velocidade, rb.linearVelocity.y);
+            rb.linearVelocity = new Vector2(velX, rb.linearVelocity.y);
+
+        float metadeLarguraPersonagem = personagemCollider != null ? personagemCollider.bounds.extents.x : 0f;
+        float limiteEsquerdo = tilemapLimiteEsquerdoRenderer.bounds.min.x + metadeLarguraPersonagem + margemLimiteEsquerdo;
+
+        if (transform.position.x >= limiteEsquerdo)
+            return;
+
+        transform.position = new Vector2(limiteEsquerdo, transform.position.y);
 
         TravarLimiteEsquerdoDoMapa();
     }

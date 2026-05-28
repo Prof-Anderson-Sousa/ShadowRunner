@@ -528,7 +528,7 @@ Transform:
   m_GameObject: {fileID: 341491641}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -6.76, y: -1.22, z: 0}
+  m_LocalPosition: {x: -3.15, y: 3.34, z: 0}
   m_LocalScale: {x: 0.05923864, y: 0.5227, z: 0.5227}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -596,6 +596,8 @@ GameObject:
   - component: {fileID: 412828992}
   - component: {fileID: 412828991}
   - component: {fileID: 412828994}
+  - component: {fileID: 412828996}
+  - component: {fileID: 412828995}
   m_Layer: 6
   m_Name: "Cen\xE1rio Tilemap"
   m_TagString: Chao
@@ -650,7 +652,7 @@ TilemapCollider2D:
     m_Bits: 4294967295
   m_IsTrigger: 0
   m_UsedByEffector: 0
-  m_CompositeOperation: 0
+  m_CompositeOperation: 1
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
   m_MaximumTileChangeCount: 1000
@@ -1952,6 +1954,223 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!66 &412828995
+CompositeCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 412828989}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0, y: 0}
+  m_GeometryType: 0
+  m_GenerationType: 0
+  m_EdgeRadius: 0
+  m_ColliderPaths:
+  - m_Collider: {fileID: 412828991}
+    m_ColliderPaths:
+    - - X: -29957206
+        Y: 6645856
+      - X: -33701856
+        Y: 9666700
+      - X: -35948648
+        Y: 9666700
+      - X: -35948648
+        Y: 48333496
+      - X: -41940088
+        Y: 48333496
+      - X: -41940088
+        Y: -38666800
+      - X: -29957206
+        Y: -38666800
+    - - X: 17974322
+        Y: 19333400
+      - X: 0
+        Y: 19333400
+      - X: 0
+        Y: 9666699
+      - X: 17974322
+        Y: 9666699
+    - - X: 29957204
+        Y: 19333400
+      - X: 17974324
+        Y: 19333400
+      - X: 17974324
+        Y: 9666699
+      - X: 29957204
+        Y: 9666699
+    - - X: 59914408
+        Y: 19333400
+      - X: 53922968
+        Y: 19333400
+      - X: 53922968
+        Y: 9666699
+      - X: 59914408
+        Y: 9666699
+    - - X: 77888728
+        Y: 19333400
+      - X: 59914412
+        Y: 19333400
+      - X: 59914412
+        Y: 9666699
+      - X: 77888728
+        Y: 9666699
+    - - X: -17974324
+        Y: 0
+      - X: -23965764
+        Y: 0
+      - X: -23965764
+        Y: 1812506
+      - X: -29208274
+        Y: 6041687
+      - X: -29957204
+        Y: 6041687
+      - X: -29957204
+        Y: -38666800
+      - X: -17974324
+        Y: -38666800
+    - - X: -5991441
+        Y: -4833350
+      - X: -5991441
+        Y: 0
+      - X: -17974322
+        Y: 0
+      - X: -17974322
+        Y: -5437518
+      - X: -6365906
+        Y: -5437518
+    - - X: 17974322
+        Y: -9666699
+      - X: -17974322
+        Y: -9666699
+      - X: -17974322
+        Y: -38666800
+      - X: 17974322
+        Y: -38666800
+    - - X: 119828816
+        Y: -9666699
+      - X: 77888736
+        Y: -9666699
+      - X: 77888736
+        Y: -38666800
+      - X: 119828816
+        Y: -38666800
+    - - X: 137803152
+        Y: -9666699
+      - X: 119828824
+        Y: -9666699
+      - X: 119828824
+        Y: -38666800
+      - X: 137803152
+        Y: -38666800
+    - - X: 77888728
+        Y: -9666699
+      - X: 59914412
+        Y: -9666699
+      - X: 59914412
+        Y: -38666800
+      - X: 77888728
+        Y: -38666800
+    - - X: 59914408
+        Y: -9666699
+      - X: 29957206
+        Y: -9666699
+      - X: 29957206
+        Y: -38666800
+      - X: 59914408
+        Y: -38666800
+    - - X: 29957204
+        Y: -9666699
+      - X: 17974324
+        Y: -9666699
+      - X: 17974324
+        Y: -38666800
+      - X: 29957204
+        Y: -38666800
+  m_CompositePaths:
+    m_Paths:
+    - - {x: 13.780287, y: -3.8666801}
+      - {x: 13.780287, y: -0.9666699}
+      - {x: -1.7974324, y: -0.96664053}
+      - {x: -1.797403, y: -0.54375184}
+      - {x: -0.63658273, y: -0.5437392}
+      - {x: -0.5991441, y: -0.4833278}
+      - {x: -0.5991734, y: 0}
+      - {x: -2.3965764, y: 0.0000294}
+      - {x: -2.3965862, y: 0.1812585}
+      - {x: -2.9208364, y: 0.6041687}
+      - {x: -2.9957206, y: 0.6041981}
+      - {x: -2.9957304, y: 0.6645935}
+      - {x: -3.3701944, y: 0.96667004}
+      - {x: -3.5948648, y: 0.9666994}
+      - {x: -3.594894, y: 4.8333497}
+      - {x: -4.194009, y: 4.8333206}
+      - {x: -4.1939797, y: -3.8666801}
+    - - {x: 7.788843, y: 0.9666699}
+      - {x: 7.788843, y: 1.9333401}
+      - {x: 5.392297, y: 1.9333109}
+      - {x: 5.392326, y: 0.9666699}
+    - - {x: 2.9956913, y: 0.9666699}
+      - {x: 2.9956913, y: 1.9333401}
+      - {x: 0, y: 1.9333109}
+      - {x: 0.000029300001, y: 0.9666699}
+  m_VertexDistance: 0.0005
+  m_OffsetDistance: 0.00005
+  m_UseDelaunayMesh: 0
+  m_CompositeGameObject: {fileID: 412828989}
+--- !u!50 &412828996
+Rigidbody2D:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 412828989}
+  m_BodyType: 2
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -2109,6 +2328,7 @@ MonoBehaviour:
   limiteInferior: 0.6
   limiteSuperior: 1.2
   nomeTilemapLimiteEsquerdo: "Cen\xE1rio Tilemap"
+  margemVisualEsquerda: 2
 --- !u!1 &610109842
 GameObject:
   m_ObjectHideFlags: 0
@@ -4124,7 +4344,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b005439743aae4a429380423fd145fdd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
+<<<<<<< HEAD
   personagemPrefab: {fileID: 652414345626287973, guid: 7167f52102234d74584f818204115f71, type: 3}
+=======
+  personagemPrefab: {fileID: 3713827824860794085, guid: 4098da1da519c43fab7e2166fbec55ed, type: 3}
+>>>>>>> 083d40b (Adiciona sistema de combate, barra de vida e morcego patrulha)
   spawnPoint: {fileID: 341491642}
   pontuacaoTexto: {fileID: 622042976}
   essenciaTexto: {fileID: 736105580}
@@ -4508,5 +4732,3 @@ SceneRoots:
   - {fileID: 1736665951}
   - {fileID: 265845676}
   - {fileID: 610109845}
-  - {fileID: 3319900710235373023}
-  - {fileID: 1448956066}

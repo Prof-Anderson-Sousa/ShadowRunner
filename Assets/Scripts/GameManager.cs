@@ -23,6 +23,8 @@ public class GameManager : MonoBehaviour
     public int OndaAtual { get; private set; } = 1;
     public Transform JogadorAtual { get; private set; }
 
+    private HealthBar healthBar;
+
     void Awake()
     {
         if (Instance == null)
@@ -38,6 +40,10 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
+        GameObject hudGO = new GameObject("[HUD]");
+        DontDestroyOnLoad(hudGO);
+        healthBar = hudGO.AddComponent<HealthBar>();
+
         SpawnarPersonagem();
         AtualizarHUD();
     }
@@ -64,6 +70,7 @@ public class GameManager : MonoBehaviour
         );
 
         JogadorAtual = personagemInstanciado.transform;
+        Debug.Log($"[GameManager] Personagem spawnou em {posicaoSpawn}. JogadorAtual: {JogadorAtual.name}");
     }
 
     public void ReiniciarJogo()
@@ -74,6 +81,7 @@ public class GameManager : MonoBehaviour
 
     public void EncerrarJogo()
     {
+        Debug.Log("[GameManager] EncerrarJogo chamado — personagem morreu.");
         AtualizarResumoGameOver();
         MenuController.Instance?.MostrarGameOver();
     }
@@ -121,10 +129,10 @@ public class GameManager : MonoBehaviour
 
     public void AtualizarVidaJogador(int vidaAtual, int vidaMaxima)
     {
-        if (vidaTexto == null)
-            return;
+        if (vidaTexto != null)
+            vidaTexto.text = $"Vida: {vidaAtual}/{vidaMaxima}";
 
-        vidaTexto.text = $"Vida: {vidaAtual}/{vidaMaxima}";
+        healthBar?.UpdateHealth(vidaAtual, vidaMaxima);
     }
 
     void AtualizarHUD()
