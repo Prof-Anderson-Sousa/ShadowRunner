@@ -25,6 +25,7 @@ public class PlayerMovement : MonoBehaviour
     public float dashCooldown = 1f;
     private bool canDash = true;
     private bool isDashing;
+    public bool IsDashing => isDashing;
 
     [Header("Efeitos Visuais")]
     public GameObject dustPrefab;

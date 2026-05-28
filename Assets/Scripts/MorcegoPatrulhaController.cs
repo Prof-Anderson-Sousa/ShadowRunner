@@ -392,13 +392,23 @@ public class MorcegoPatrulhaController : MonoBehaviour
 
     private void VerificarContatoComPlayer(Collider2D playerCollider)
     {
+        PlayerController controller = playerCollider.GetComponent<PlayerController>()
+                                   ?? playerCollider.GetComponentInParent<PlayerController>();
+        if (controller != null && controller.IsDashing)
+        {
+            ReceberAtaqueEspada();
+            return;
+        }
+
         PlayerCombat combat = playerCollider.GetComponent<PlayerCombat>()
                            ?? playerCollider.GetComponentInParent<PlayerCombat>();
-        Debug.Log($"[Morcego] VerificarContato: combat={combat != null}, isDashing={combat?.isDashing}, playerObj={playerCollider.gameObject.name}");
         if (combat != null && combat.isDashing)
+        {
             ReceberAtaqueEspada();
-        else
-            BaterNoPlayer(playerCollider);
+            return;
+        }
+
+        BaterNoPlayer(playerCollider);
     }
 
     private bool EstaNaLayerSelecionada(int layer, LayerMask layerMask)
