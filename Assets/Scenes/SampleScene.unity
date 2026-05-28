@@ -4344,11 +4344,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b005439743aae4a429380423fd145fdd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
-<<<<<<< HEAD
   personagemPrefab: {fileID: 652414345626287973, guid: 7167f52102234d74584f818204115f71, type: 3}
-=======
-  personagemPrefab: {fileID: 3713827824860794085, guid: 4098da1da519c43fab7e2166fbec55ed, type: 3}
->>>>>>> 083d40b (Adiciona sistema de combate, barra de vida e morcego patrulha)
   spawnPoint: {fileID: 341491642}
   pontuacaoTexto: {fileID: 622042976}
   essenciaTexto: {fileID: 736105580}

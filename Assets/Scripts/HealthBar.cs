@@ -80,26 +80,11 @@ public class HealthBar : MonoBehaviour
         inner.offsetMax = new Vector2(-3, -3);
         MakeImage(inner, PanelColor);
 
-        // "HP" label — left side of inner
-        var label = MakeRect(inner, "HPLabel");
-        label.anchorMin = new Vector2(0, 0);
-        label.anchorMax = new Vector2(0, 1);
-        label.offsetMin = new Vector2(8, 4);
-        label.offsetMax = new Vector2(32, -4);
-        var labelTMP = label.gameObject.AddComponent<TextMeshProUGUI>();
-        labelTMP.text = "HP";
-        labelTMP.fontSize = 15f;
-        labelTMP.fontStyle = FontStyles.Bold;
-        labelTMP.color = new Color(0.80f, 0.55f, 0.95f, 1f);
-        labelTMP.alignment = TextAlignmentOptions.MidlineLeft;
-        labelTMP.enableWordWrapping = false;
-        labelTMP.raycastTarget = false;
-
-        // Bar background — fills the right portion of inner
+        // Bar background — fills the inner panel
         var barBg = MakeRect(inner, "BarBg");
         barBg.anchorMin = new Vector2(0, 0);
         barBg.anchorMax = new Vector2(1, 1);
-        barBg.offsetMin = new Vector2(42, 8);
+        barBg.offsetMin = new Vector2(8, 8);
         barBg.offsetMax = new Vector2(-8, -8);
         MakeImage(barBg, BarBgColor);
 
