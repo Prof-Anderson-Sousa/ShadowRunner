@@ -106,9 +106,11 @@ public class HealthBar : MonoBehaviour
         count.offsetMax = Vector2.zero;
         countText = count.gameObject.AddComponent<TextMeshProUGUI>();
         countText.text = "5/5";
-        countText.fontSize = 12f;
+        countText.fontSize = 16f;
         countText.fontStyle = FontStyles.Bold;
         countText.color = Color.white;
+        countText.outlineWidth = 0.3f;
+        countText.outlineColor = new Color32(0, 0, 0, 220);
         countText.alignment = TextAlignmentOptions.Center;
         countText.enableWordWrapping = false;
         countText.raycastTarget = false;
