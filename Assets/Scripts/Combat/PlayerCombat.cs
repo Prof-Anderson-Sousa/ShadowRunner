@@ -93,6 +93,20 @@ public class PlayerCombat : MonoBehaviour
             return;
 
         rb.linearVelocity = new Vector2(facingDirection * dashSpeed, rb.linearVelocity.y);
+        DashOverlapCheck();
+    }
+
+    private void DashOverlapCheck()
+    {
+        Collider2D col = GetComponent<Collider2D>();
+        if (col == null) return;
+
+        Collider2D[] hits = Physics2D.OverlapBoxAll(col.bounds.center, col.bounds.size * 1.1f, 0f);
+        foreach (Collider2D hit in hits)
+        {
+            if (hit.gameObject != gameObject)
+                DashHitEnemy(hit);
+        }
     }
 
     private void CacheVisualRenderer()
